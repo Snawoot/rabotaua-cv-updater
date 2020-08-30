@@ -25,17 +25,16 @@ from selenium.common.exceptions import (TimeoutException,
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.utils import ChromeType
 
-RESUME_LIST_URL = "https://www.work.ua/ru/jobseeker/my/resumes/"
-RESUME_LIST_URL_PATTERN = r"^https://www\.work\.ua/(ru/)?jobseeker/my/resumes/?$"
-LOGIN_URL = "https://www.work.ua/jobseeker/login/"
-POST_LOGIN_URL_PATTERN = r"^https://www\.work\.ua/(ru/)?jobseeker/my/?$"
-UPDATE_BUTTON_XPATH = "//a[contains(@href, '/update/expire_date')]"
-UPDATE_INTERVAL = 7 * 24 * 3600
+RESUME_LIST_URL = "https://account.rabota.ua/jobsearch/notepad/cvs"
+RESUME_LIST_URL_PATTERN = r"^https://account\.rabota\.ua/(ua/)?jobsearch/notepad/cvs/?$"
+LOGIN_URL = "https://rabota.ua/jobsearch/login"
+POST_LOGIN_URL_PATTERN = r"^https://account\.rabota\.ua/(ua/)?jobsearch/notepad/vacancies_profile/?$"
+UPDATE_BUTTON_XPATH = "//div[contains(@class, 'cv-item-container')]"\
+    "//button[contains(@data-bind, 'updateDate') and "\
+    "(contains(text(), 'Обновить') or contains(text(), 'Оновити'))]"
+UPDATE_INTERVAL = 1 * 3600
 UPDATE_INTERVAL_MIN_DRIFT = 10
 UPDATE_INTERVAL_MAX_DRIFT = 60
-SESSION_REFRESH_INTERVAL = 4 * 3600
-SESSION_REFRESH_INTERVAL_MIN_DRIFT = 10
-SESSION_REFRESH_INTERVAL_MAX_DRIFT = 60
 MANUAL_LOGIN_TIMEOUT = 3600
 
 DB_INIT = [
