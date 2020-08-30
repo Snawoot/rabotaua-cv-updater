@@ -36,6 +36,7 @@ UPDATE_INTERVAL = 1 * 3600
 UPDATE_INTERVAL_MIN_DRIFT = 10
 UPDATE_INTERVAL_MAX_DRIFT = 60
 MANUAL_LOGIN_TIMEOUT = 3600
+POST_UPDATE_PAUSE = 30
 
 DB_INIT = [
     "CREATE TABLE IF NOT EXISTS update_ts (\n"
@@ -93,28 +94,23 @@ class ScheduledEvent(enum.Enum):
 
 ScheduleEntry = collections.namedtuple('ScheduleEntry', ('when', 'what'))
 
+button_wait_condition = EC.presence_of_element_located((By.XPATH, UPDATE_BUTTON_XPATH))
+
 def update(browser, timeout):
     logger = logging.getLogger("UPDATE")
     browser.get(RESUME_LIST_URL)
-    visited_urls = set()
-    while True:
-        for elem in browser.find_elements_by_xpath(UPDATE_BUTTON_XPATH):
-            href = elem.get_attribute("href")
-            logger.debug("Update link href = %s", repr(href))
-            if href in visited_urls:
-                continue
-            sleep(1 + 2 * random())
-            elem.click()
-            logger.debug("Clicked!")
-            WebDriverWait(browser, timeout).until(
-                EC.staleness_of(elem)
-            )
-            WebDriverWait(browser, timeout).until(
-                EC.url_matches(RESUME_LIST_URL_PATTERN)
-            )
-            break
-        else:
-            break
+    WebDriverWait(browser, timeout).until(
+        button_wait_condition
+    )
+    update_buttons = browser.find_elements_by_xpath(UPDATE_BUTTON_XPATH)
+    logger.info("Located %d update buttons", len(update_buttons))
+    for elem in update_buttons:
+        sleep(1 + 2 * random())
+        elem.click()
+        logger.debug("click!")
+    # There is no easy reliable way to make sure all outstanding request are
+    # complete. So, just give it enough time.
+    sleep(POST_UPDATE_PAUSE)
     logger.info('Updated!')
 
 def login(browser, timeout):
@@ -280,19 +276,11 @@ class Scheduler:
 
     @staticmethod
     def _iter_events(last_login, last_update):
-        return merge(
-            Scheduler._event_stream(ScheduledEvent.REFRESH,
-                                    last_login,
-                                    SESSION_REFRESH_INTERVAL,
-                                    SESSION_REFRESH_INTERVAL_MIN_DRIFT,
-                                    SESSION_REFRESH_INTERVAL_MAX_DRIFT),
-            Scheduler._event_stream(ScheduledEvent.UPDATE,
-                                    last_update,
-                                    UPDATE_INTERVAL,
-                                    UPDATE_INTERVAL_MIN_DRIFT,
-                                    UPDATE_INTERVAL_MAX_DRIFT),
-            key=lambda ev: ev.when
-        )
+        return Scheduler._event_stream(ScheduledEvent.UPDATE,
+                                       last_update,
+                                       UPDATE_INTERVAL,
+                                       UPDATE_INTERVAL_MIN_DRIFT,
+                                       UPDATE_INTERVAL_MAX_DRIFT)
 
 def do_login(browser_factory, timeout):
     browser = browser_factory.new()
