@@ -1,7 +1,7 @@
 rabotaua-cv-updater
 =============
 
-Python script to update your CV on https://rabota.ua/
+Python script to update your CV on https://rabota.ua/ every 30 minites.
 
 ## Requirements 
 
@@ -33,7 +33,7 @@ Run:
 rabotaua-cv-updater update
 ```
 
-Application will be running continously, updating all your CV's in random intervals about to 4 hours. If application is being restarted, it will figure out next update from own records on last update.
+Application will be running continously, updating all your CV's in random intervals about to 30 minutes. If application is being restarted, it will figure out next update from own records on last update.
 
 ## Datadir structure
 
