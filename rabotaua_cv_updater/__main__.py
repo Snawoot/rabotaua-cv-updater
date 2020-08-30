@@ -32,7 +32,7 @@ POST_LOGIN_URL_PATTERN = r"^https://account\.rabota\.ua/(ua/)?jobsearch/notepad/
 UPDATE_BUTTON_XPATH = "//div[contains(@class, 'cv-item-container')]"\
     "//button[contains(@data-bind, 'updateDate') and "\
     "(contains(text(), 'Обновить') or contains(text(), 'Оновити'))]"
-UPDATE_INTERVAL = 1 * 3600
+UPDATE_INTERVAL = 30 * 60
 UPDATE_INTERVAL_MIN_DRIFT = 10
 UPDATE_INTERVAL_MAX_DRIFT = 60
 MANUAL_LOGIN_TIMEOUT = 3600
