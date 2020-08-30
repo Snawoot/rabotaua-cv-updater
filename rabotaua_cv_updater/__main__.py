@@ -179,7 +179,7 @@ def parse_args():
     parser.add_argument("-d", "--data-dir",
                         default=os.path.join(os.path.expanduser("~"),
                                              '.config',
-                                             'workua-cv-updater'),
+                                             'rabotaua-cv-updater'),
                         help="application datadir location",
                         metavar="FILE")
     return parser.parse_args()

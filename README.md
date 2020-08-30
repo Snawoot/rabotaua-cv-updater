@@ -1,7 +1,7 @@
-workua-cv-updater
+rabotaua-cv-updater
 =============
 
-Python script to update your CV on https://work.ua/
+Python script to update your CV on https://rabota.ua/
 
 ## Requirements 
 
@@ -13,14 +13,14 @@ Run within source directory:
 
 `pip3 install .`
 
-`workua-cv-updater` executable command should become immediately available. Alternatively, you may invoke application with `python3 -m workua_cv_updater ...` command
+`rabotaua-cv-updater` executable command should become immediately available. Alternatively, you may invoke application with `python3 -m rabotaua_cv_updater ...` command
 
 ## Set your account
 
 Run:
 
 ```
-workua-cv-updater login
+rabotaua-cv-updater login
 ```
 
 Browser window will pop up, prompting user to login. Once login will be acknowledged by application, browser window will be closed.
@@ -30,7 +30,7 @@ Browser window will pop up, prompting user to login. Once login will be acknowle
 Run:
 
 ```
-workua-cv-updater update
+rabotaua-cv-updater update
 ```
 
 Application will be running continously, updating all your CV's in random intervals about to 4 hours. If application is being restarted, it will figure out next update from own records on last update.
@@ -38,7 +38,7 @@ Application will be running continously, updating all your CV's in random interv
 ## Datadir structure
 
 ```
-~/.config/workua-cv-updater
+~/.config/rabotaua-cv-updater
 ├── updater.db # SQLite database with last update timestamp
 └── profile    # browser profile
 ```
@@ -51,8 +51,8 @@ Application will be running continously, updating all your CV's in random interv
 ## Synopsis
 
 ```
-$ workua-cv-updater -h
-usage: workua-cv-updater [-h] [-t TIMEOUT] [-b {chrome,chromium}]
+$ rabotaua-cv-updater -h
+usage: rabotaua-cv-updater [-h] [-t TIMEOUT] [-b {chrome,chromium}]
                      [-v {debug,info,warn,error,fatal}] [-d FILE]
                      {login,update}
 
@@ -71,5 +71,5 @@ optional arguments:
                         logging verbosity (default: info)
   -d FILE, --data-dir FILE
                         application datadir location (default:
-                        ~/.config/workua-cv-updater)
+                        ~/.config/rabotaua-cv-updater)
 ```
